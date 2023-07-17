@@ -3,7 +3,7 @@ from manim.mobject.mobject import Mobject
 from manim.mobject.types.vectorized_mobject import VMobject
 import numpy as np
 from .cubie import Cubie
-from kociemba import solver as sv
+from kociemba import solve
 
 class RubiksCube(VMobject):
     #If facing the Rubik's Cube, X goes Front to Back, Y goes Right to Left, Z goes Down to Up 
@@ -71,7 +71,7 @@ class RubiksCube(VMobject):
             # return
 
     def solve_by_kociemba(self, state):
-        return sv.solve(state).replace("3", "'").replace("1", "").split()
+        return solve(state).replace("3", "'").replace("1", "").split()
 
     def transform_cubie(self, position, offset, tile):
         offsets_nr = len(offset)
