@@ -18,20 +18,19 @@ class AllTogetherExample(ThreeDScene):
         self.play(FadeIn(cube))
         self.wait()
 
-        # Loop through results of the kociemba algorithm
-        # for m in cube.solve_by_kociemba(state):
-        #     # Execute the move
-        #     self.play(CubeMove(cube, m), run_time=1.5)
+        testcubies = [
+            cube.cubies[0,0,0],
+            cube.cubies[1,1,1],
+            cube.cubies[2,2,2]
+        ]
 
-        # Show the final product
-        self.play(
-            AnimationGroup(
-                # Succession(*[cubie.faces.animate.indicate() for cubie
-                #              in np.nditer(cube.cubies, flags=["refs_ok"],
-                #                           op_flags=["readwrite"])],
-                #            lag_ratio=0.5)
-                cube.cubies[0,0,0].animate.shift(DOWN),
-                cube.cubies[1,1,1].animate.shift(DOWN),
-                cube.cubies[2,2,2].animate.shift(DOWN)
-            )
-        )
+        self.play(AnimationGroup(*[
+            cubie.animate.rotate(PI/2, about_point=cubie.get_rounded_center()) for cubie in testcubies
+        ]))
+
+        # Loop through results of the kociemba algorithm
+        for m in cube.solve_by_kociemba(state):
+            # Execute the move
+            self.play(CubeMove(cube, m), run_time=1.5)
+
+        self.wait()
