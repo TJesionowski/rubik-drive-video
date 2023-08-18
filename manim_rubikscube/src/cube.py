@@ -108,11 +108,16 @@ class RubiksCube(VMobject):
             return face
     
     def set_indices(self):
+        """Initializes the coordinate->index mapping. Use after any
+        transformation which affects the coordinates of the Cube."""
         for c in self.cubies.flatten():
             # self.indices[c.get_position()] = c.get_position()
             self.indices[c.get_rounded_center()] = c.position
 
     def adjust_indices(self, cubies):
+        """Updates the cubie indexing based on cubie coordinates. Use
+        after face rotations to fix the cubie indexing within the
+        ndarray."""
         for c in cubies.flatten():
             loc = self.indices[c.get_rounded_center()]
             self.cubies[loc[0], loc[1], loc[2]] = c
